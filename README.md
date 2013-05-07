@@ -1,11 +1,11 @@
-Introduction to Backbone Part 1 - Client Side
+Introduction to Backbone Part 2 - Server Side
 =============================================
 
-A twitter client side applciation written in backbone.js as part of a screencast available here: http://youtu.be/2BDGBJUtAmo.
+A twitter client side applciation written in backbone.js and Node.js as part of a screencast available here:  http://youtu.be/hHlqisQeERk.
 
 Run
 =====
 Open the commandline and navigate to the directory you downloaded the repository to. Then type:
-`node static.js`
+`node app`
 
-This will run a static server you can use to test the application by going to `localhost:3000`.
+This will start express on port 3000. You can run the application by opening your browser and going to `localhost:3000`.

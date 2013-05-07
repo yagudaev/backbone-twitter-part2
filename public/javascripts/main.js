@@ -8,6 +8,7 @@
     var tweetsView, tweetDetailsView;
 
     var Tweet = Backbone.Model.extend({
+      urlRoot: '/tweets',
       defaults: function() {
         return {
           author: '',
@@ -99,13 +100,20 @@
       },
       show: function() {
         this.$el.show();
-      }
+      },
     });
 
-    var TweetDetailsView = Backbone.View.extend({
+   var TweetDetailsView = Backbone.View.extend({
       el: $('#tweet-details'),
+      events: {
+        'click .back': 'back'
+      },
       initialize: function() {
         this.template = _.template($('#tweet-details-template').html());
+      },
+      back: function(ev) {
+        ev.preventDefault();
+        router.navigate('', {trigger: true});
       },
       hide: function() {
         this.$el.hide();
@@ -113,6 +121,7 @@
       show: function(model) {
         this.model = model;
         this.render();
+        this.$el.show();
       },
       render: function() {
         this.$el.html(this.template(this.model.toJSON()));
@@ -130,13 +139,20 @@
             tweetsView.show();
         },
         show: function(id) {
-            model = tweets.where({_id: id});
-            tweetDetailsView.show(model);
-            tweetsView.hide();
+            model = new Tweet({_id: id});
+            model.fetch({
+                success: function() {
+                    tweetDetailsView.show(model);
+                    tweetsView.hide();
+                },
+                error: function()  {
+                    console.log("Cannot fetch model to show!");
+                }
+            });
         }
     });
 
-    window.router = new Router();
+    var router = new Router();
 
     $(document).ready(function() {
       $('#new-tweet').submit(function(ev) {
@@ -153,8 +169,7 @@
       
       tweetsView = new TweetsView();
       tweetDetailsView = new TweetDetailsView();
-
-      Backbone.history.start();
+      Backbone.history.start({pushState: true});
     });
     
 })(jQuery);

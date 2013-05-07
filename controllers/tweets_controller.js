@@ -16,7 +16,7 @@ exports.show = function(req, res) {
         if(err) return res.status(500).send({status: "Failed to find tweet due to database error " + id});
         if(!tweet) return res.status(404).send({status: "Cannot find tweet with id=" + id});
 
-        res.render('tweets/show', tweet);
+        res.send(tweet);
     });
 };
 

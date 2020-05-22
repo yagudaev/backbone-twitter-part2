@@ -157,10 +157,10 @@
     $(document).ready(function() {
       $('#new-tweet').submit(function(ev) {
         var tweet = new Tweet({ author: $('#author-name').val(), status: $('#status-update').val() });
-        tweets.add(tweet);
+        
         console.log(tweets.toJSON());
         tweet.save({}, {
-          success: function() { console.log("successfully saved tweet!"); },
+          success: function() { console.log("successfully saved tweet!"); tweets.add(tweet);},
           error: function() { console.log("Error saving tweet!"); }
         });
         
